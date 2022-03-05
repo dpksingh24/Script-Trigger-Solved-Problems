@@ -4,7 +4,7 @@ public class InsertContact {
         
         List<Account> accList = new List<Account>();
         accList = [select id, name from Account LIMIT 20];
-
+        
         list<Contact> listconn = new list<Contact>();
         Integer k=0;
         for(integer i=1;i<10;++i){
@@ -16,5 +16,15 @@ public class InsertContact {
         }
         Insert listconn;
         System.debug(listconn);
+    }
+    
+    
+    //using sobject demo
+    public static void insertAcc(){
+        SObject accountrec = (SObject) Type.forName('Account').newInstance();
+        accountrec.put('Name', 'Sample Sobject');
+        accountrec.put('Phone', '123456789');
+        
+        insert accountrec;
     }
 }
