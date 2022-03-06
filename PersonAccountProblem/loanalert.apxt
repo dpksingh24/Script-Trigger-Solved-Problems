@@ -1,0 +1,8 @@
+trigger loanalert on Loan_Data__c (before insert) {
+    for(Loan_Data__c ld : Trigger.new){
+        if(ld.loan_amount__c  > 50000)
+        {
+           ld.addError('you can not take loan more than 50000');
+        }
+    }
+}
