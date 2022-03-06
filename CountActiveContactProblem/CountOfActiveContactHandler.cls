@@ -9,7 +9,8 @@ public class CountOfActiveContactHandler {
         AccountContactService.updateActiveContacts(accountIds);
     }
     
-    public static void afterUpdateHandler(List<Contact> updateContact, Map<Id, Contact> oldContactsMap) {
+    public static void afterUpdateHandler(List<Contact> updateContact, Map<Id, Contact> oldContactsMap) 
+    {
         Set<Id> accountIds = new Set<Id>();
         for(Contact con: updateContact) {
             //capture the account id only if active checkbox value if flipped
@@ -22,4 +23,36 @@ public class CountOfActiveContactHandler {
         }
         AccountContactService.updateActiveContacts(accountIds);
     }
+    
+    public static void afterDeleteHandler(List<Contact> oldContacts) 
+    {
+     	Set<Id> accountIds = new Set<Id>();
+        for(Contact con: oldContacts) {
+            if(String.isNotBlank(con.AccountId)){
+                accountIds.add(con.AccountId);
+            }
+        }
+        AccountContactService.updateActiveContacts(accountIds);
+    }
+    
+    Public static void afterUnDeleteHandler(List<Contact> newContacts) 
+    {
+        Set<Id> accountIds = new Set<Id>();
+        for(Contact con: newContacts) {
+            if(String.isNotBlank(con.AccountId)){
+                accountIds.add(con.AccountId);
+            }
+        }
+        AccountContactService.updateActiveContacts(accountIds);
+    } 
 }
+
+
+
+
+
+
+
+
+
+
