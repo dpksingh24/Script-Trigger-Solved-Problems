@@ -30,15 +30,22 @@
 //optimize code using set
 trigger CountOfActiveContact on Contact (after insert, after update, after delete, after undelete) {
     switch on Trigger.operationType {
-        when AFTER_INSERT {
+        When AFTER_INSERT 
+        {
             CountOfActiveContactHandler.afterInsertHandler(Trigger.new);
         }
         
-        When AFTER_UPDATE {
+        When AFTER_UPDATE 
+        {
             CountOfActiveContactHandler.afterUpdateHandler(Trigger.new, Trigger.oldMap);
+        }
+        When AFTER_DELETE 
+        {
+            CountOfActiveContactHandler.afterDeleteHandler(Trigger.old);
+        }
+        When AFTER_UNDELETE 
+        {
+            CountOfActiveContactHandler.afterUnDeleteHandler(Trigger.new);
         }
     } 
 }
-
-
-
