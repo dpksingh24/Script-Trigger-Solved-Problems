@@ -1,0 +1,11 @@
+//on account to create a 'default' (number of contacts= numbers of employee) contact every time an account is created./update"
+trigger CreateDefault on Account (after insert, after update) {
+    switch on trigger.operationtype {
+        when AFTER_INSERT {
+        	createDefaultHandler.AfterInsert(Trigger.new);
+        }
+        when AFTER_UPDATE {
+            createDefaultHandler.afterUpdate(Trigger.new, Trigger.oldMap);
+        }
+    }
+}
