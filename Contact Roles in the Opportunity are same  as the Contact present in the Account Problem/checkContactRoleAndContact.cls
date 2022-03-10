@@ -50,7 +50,14 @@ public class checkContactRoleAndContact {
 }    
 
 
-        
+/*
+"Create a Custom field in Opportunity:
+-CheckBox(Same Contact).
+Write a Script to check if the Contact Roles in the Opportunity are same 
+as the Contact present in the Account(Lookup in Opportunity).
+If the Contact in Account and Contact Roles is Opportunity are same 
+then Set the CheckBox(Same Contact) to True;"
+*/        
         
         // map 1 key = Opportunity Id value = Set<Id> contact Id
         // key = '0065g00000EaCl4AAF'   value = set<>
