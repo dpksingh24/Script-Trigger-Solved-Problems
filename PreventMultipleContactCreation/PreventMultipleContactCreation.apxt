@@ -1,0 +1,14 @@
+trigger PreventMultipleContactCreation on Contact (before delete, after update, before insert, before update) {
+    if(trigger.isBefore && trigger.isInsert) {
+        PreventMultipleContactCreationHandler.createPrimaryContact(Trigger.new);
+    }
+    if(trigger.isBefore && trigger.isUpdate) {
+        PreventMultipleContactCreationHandler.PrimaryContactToUpdate(Trigger.newMap, Trigger.oldMap);
+    }
+     if(trigger.isAfter && trigger.isInsert){
+        PreventMultipleContactCreationHandler.calculateNumberofContactsonInsert(trigger.new);
+    }
+       if(trigger.isBefore && trigger.isDelete){
+        PreventMultipleContactCreationHandler.calculateNumberofContactsonDelete(trigger.old);
+    }
+}
