@@ -1,0 +1,11 @@
+trigger OnlyOneAssessment on Assesment_Conduct__c (before delete,after update,before insert,before update,after insert) {
+    SWITCH on Trigger.OperationType{
+        when BEFORE_INSERT{
+            OnlyOneAssesmentHandler.oneAss(Trigger.new);
+            //OnlyOneAssesmentHandler.oneAss(trigger.newMap,trigger.oldMap);
+        }
+        when BEFORE_UPDATE {
+            updateAssessmentTosStudent.insertTotalAssessmentGiven(Trigger.old);
+        }
+    }
+}
