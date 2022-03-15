@@ -1,11 +1,11 @@
 public class PersonAccount {
     public static void insertpa(){
         List<Person_Account__c> paList = new List<Person_Account__c>();
-        for(Integer i=0;i<10;++i){
+        for(Integer i=1;i<=10;++i){
 			Person_Account__c pa = new Person_Account__c();
             pa.Name = 'Deepak pa 1: '+i;
-            pa.father_name__c = 'pa fathername';
-            pa.address__c = 'pa address';
+            pa.father_name__c = 'Father name';
+            pa.address__c = 'Person Address 1: '+i;
             
             paList.add(pa);
         }
@@ -15,12 +15,12 @@ public class PersonAccount {
   
    		List<Loan_Data__c> loandatalist = new List<Loan_Data__c>();
         for(Person_Account__c pa: paList){
-            for(integer i=0;i<3;i++){
+            for(integer i=1;i<=3;i++){
                 Loan_Data__c ld = new Loan_Data__c();
                 ld.Name = 'loan data 1: '+i;
                 ld.Loan_Status__c = 'Active';
                 ld.Person__c = pa.Id;
-                ld.loan_amount__c = 9000;
+                ld.loan_amount__c = Integer.valueOf((math.random() * 1000));
                 ld.Loan_taken_date__c = date.today();
                 
                 loandatalist.add(ld);
