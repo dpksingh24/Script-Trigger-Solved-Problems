@@ -11,12 +11,15 @@ public class updateAssessmentToStudent {
             for(AggregateResult results : [
                 SELECT count(Id) total, Student__c 
                 FROM Assesment_Conduct__c 
-                WHERE Student__c IN: acIds
+                WHERE Student__c IN: acIds 
                 GROUP BY Student__c
             ]) {
+                
                 Student__c stuObj = new Student__c();
+                
                 stuObj.Id = (Id)results.get('Student__c');
                 stuObj.totalAssessmentGiven__c = (Integer)results.get('total');
+                
                 stuMap.put(stuObj.Id, stuObj);
                 system.debug(results);   
             }
@@ -27,8 +30,8 @@ public class updateAssessmentToStudent {
         }
     }
     
-    //update && delete
-    public static void updateTotalAssesmentGiven(List<Assesment_Conduct__c> ascList) {
+    //delete
+    public static void DeleteTotalAssesmentGiven(List<Assesment_Conduct__c> ascList) {
         
         Set<Id> stuIds = new Set<Id>();  
         Map<Id, Student__c> stumap = new Map<Id, Student__c>();
@@ -72,4 +75,41 @@ public class updateAssessmentToStudent {
         }
         
     }
+    
+    //undelete
+    public static void afterUnDeleteTotalAssesmentGiven(List<Assesment_Conduct__c> udAscList) {
+        Set<Id> stuIds = new Set<Id>();  
+        
+        for(Assesment_Conduct__c ascObj : udAscList){
+            if(ascObj.Student__c != NULL) {
+                stuIds.add(ascObj.Student__c);
+            }
+        }
+        system.debug('after undelete '+ stuIds);
+        Map<Id,Student__c> stuMap = new Map<Id, Student__c>();
+        
+        if(stuIds != NULL && stuIds.size() > 0) {
+            for(AggregateResult results : [
+                SELECT count(Id) total, Student__c 
+                FROM Assesment_Conduct__c 
+                WHERE Student__c IN: stuIds 
+                GROUP BY Student__c
+            ]) {
+                
+                Student__c stuObj = new Student__c();
+                
+                stuObj.Id = (Id)results.get('Student__c');
+                stuObj.totalAssessmentGiven__c = (Integer)results.get('total');
+                
+                stuMap.put(stuObj.Id, stuObj);
+                system.debug(results);   
+            }
+            
+            if(stuMap!=NULL && stuMap.size()>0) {
+                update stuMap.values();
+            }
+        }
+    }
+    
 }
+
