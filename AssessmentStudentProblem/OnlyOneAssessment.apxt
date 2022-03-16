@@ -1,10 +1,14 @@
-trigger OnlyOneAssessment on Assesment_Conduct__c (after insert, after update, before delete) {
+trigger OnlyOneAssessment on Assesment_Conduct__c (after insert, before delete, after undelete) {
     if(trigger.isAfter && trigger.isInsert) {
         updateAssessmentToStudent.insertTotalAssessmentGiven(Trigger.new);
         
         OnlyOneAssesmentHandler.oneAss(Trigger.old);
     }   
     if(trigger.isBefore && trigger.isDelete){
-        updateAssessmentToStudent.updateTotalAssesmentGiven(trigger.old);
+        updateAssessmentToStudent.DeleteTotalAssesmentGiven(trigger.old);
     }
+    if(trigger.isAfter && trigger.isUnDelete){
+        updateAssessmentToStudent.afterUnDeleteTotalAssesmentGiven(trigger.new);
+    }
+    
 }
