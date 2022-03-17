@@ -1,0 +1,21 @@
+trigger AmountProblem on Contact (after insert) {
+    
+    if(trigger.isAfter && trigger.isInsert) {
+        RollupAmountProblemHandler.InsertMain(Trigger.new);
+    }
+}
+
+/*
+Make two number fields on contact object
+Amount_X
+Amount_Y
+2) Make one picklist field "Type" , values ('Positive', 'Negative') on Account Object
+3) Make two number fields on account
+Rollup_Amount_X
+Rollup_Amount_Y
+Rollup_Amount
+4) Make one trigger on contact object, which will do following:
+--> Sum all child of contact's field "Amount_X" and store in parent account's "Rollup_Amount_X" Where Account's Type is "Positive"
+--> Sum all child of contact's field "Amount_Y" and store in parent account's "Rollup_Amount_Y" Where Account's Type is "Negative"
+--> Sum all child of contact's field "Amount_X" + "Amount_Y" and store in parent account's "Rollup_Amount"
+*/
