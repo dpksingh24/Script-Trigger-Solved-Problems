@@ -1,0 +1,5 @@
+trigger PolicyProblem on Policy__c (before update) {
+    if(Trigger.isBefore &&  Trigger.isUpdate) {
+        PolicyProblemHandler.updatepolicy(Trigger.new);
+    }
+}
