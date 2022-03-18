@@ -1,4 +1,4 @@
-public class FindHigherContactOfAccount {
+public class countContactAndUpdateAccountField {
     public static void getCon() {
         
         Map<Id, List<Contact>> AcctContactList = new Map<Id, List<Contact>>();
