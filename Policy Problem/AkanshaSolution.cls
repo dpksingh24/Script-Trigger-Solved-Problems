@@ -18,11 +18,6 @@ trigger PolicyOpportunity on Policy__c (before update) {
                           p.Renew_Policy__c = true;
                           p.Opportunity_Name__c = o.id;
                       }}}	
-                    
-                
-            
-        
-        
         if(op!=null){
             update op;
         }
