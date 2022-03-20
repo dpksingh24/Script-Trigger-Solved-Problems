@@ -1,0 +1,29 @@
+trigger AccountDuplicateTrigger on Account (before insert, before update) {
+	list<String> accStr = new List<String>();
+    for(Account acc: Trigger.new) {
+        accStr.add(acc.Name);
+    }
+	system.debug(accStr);
+    List<Account> DublicateAcc = [select id, name from Account 
+                                 where name in : accStr];
+    for(Account acc: Trigger.new) {
+        if(Trigger.isInsert) {
+            if(DublicateAcc.size()!=0) {
+                acc.addError('Account already exists with this name');
+            }
+        }
+        if(Trigger.isUpdate) {
+            for(Account oldAcc : trigger.old) {
+                if(acc.Name != oldAcc.Name &&
+                   DublicateAcc.size()!=0) {
+                       acc.addError('Account already exists with this name');
+                   }
+            }
+        }
+    }
+}
+
+/*
+The following Trigger will fires when we try to create the account with same name 
+i.e. Preventing the users to create Duplicate Accounts
+*/
