@@ -41,7 +41,7 @@ public class CreatePassengers {
         
         //creating dynamically insertion for section field
         List<String> avilableSection = new List<String>{'first class','business class','economy class'};
-            Integer listSize = avilableSection.size()-1;
+            Integer listSize = avilableSection.size();
         Integer randomSection = Integer.valueOf((Math.random() * listSize));
         
         for(Passenger__c pasObj : passList) { 
@@ -50,15 +50,16 @@ public class CreatePassengers {
                 
                 flpObj.Name = 'Flight 1 '+i;
                 flpObj.Passenger__c = pasObj.Id;
-                flpObj.Flight__c = flightList.Id;
-                
+                flpObj.Flight__c =  flightList.Id;
                 flpObj.Section__c = avilableSection[randomSection];
                 
                 flpObj.date_of_departure__c = date.today();
                 flpList.add(flpObj);
             }
         }
-        INSERT flpList;
+        if(!flpList.isEmpty()) {
+            INSERT flpList;
+        }
     }
     
     
