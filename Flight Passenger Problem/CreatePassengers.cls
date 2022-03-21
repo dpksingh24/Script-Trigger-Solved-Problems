@@ -33,28 +33,32 @@ public class CreatePassengers {
     }
     
     public static void  flightPass() {
+        
         Flight__c flightList = [select id from Flight__c LIMIT 1];
         List<Passenger__c> passList = [ select id from Passenger__c LIMIT 50000];
         
         List<Flight_passenger__c> flpList = new List<Flight_passenger__c>();
         
-        for(Passenger__c pasObj : passList) {
-            Flight_passenger__c flpObj = new Flight_passenger__c();
-            
-            List<String> avilableSection = new List<String>{'first class','business class','economy class'};
-                Integer listSize = avilableSection.size();
-            Integer randomSection = Integer.valueOf((Math.random() * listSize));
-            
+        //creating dynamically insertion for section field
+        List<String> avilableSection = new List<String>{'first class','business class','economy class'};
+            Integer listSize = avilableSection.size()-1;
+        Integer randomSection = Integer.valueOf((Math.random() * listSize));
+        
+        for(Passenger__c pasObj : passList) { 
             for(Integer i=0; i<3; i++){
+                Flight_passenger__c flpObj = new Flight_passenger__c();
+                
                 flpObj.Name = 'Flight 1 '+i;
                 flpObj.Passenger__c = pasObj.Id;
                 flpObj.Flight__c = flightList.Id;
+                
                 flpObj.Section__c = avilableSection[randomSection];
+                
                 flpObj.date_of_departure__c = date.today();
+                flpList.add(flpObj);
             }
-            flpList.add(flpObj);
         }
-      INSERT flpList;
+        INSERT flpList;
     }
     
     
@@ -64,9 +68,3 @@ public class CreatePassengers {
 /*
 to create 9 pass with 3 diff section in 3 flight
 */
-
-
-
-
-
-
